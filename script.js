@@ -1,11 +1,12 @@
 // Sample status data (would normally come from a database)
 const statusData = [
-    {
-        text: "Choose people who choose you.",
-    },
-    {
+    <button class="like-btn" data-status-id="status123">
+  <i class="far fa-heart"></i>
+  <span class="like-count">0</span>
+</button>
+                 {
         text: "Manrattan.",
-        likes: "12K"
+        likes: ""
     },
     {
         text: "It's about who stays, not who promised.",
