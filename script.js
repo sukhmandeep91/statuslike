@@ -1,8 +1,8 @@
 // Sample status data (would normally come from a database)
 const statusData = [
     {
-        text: "Choose people who choose you.",
-        likes: "12K"
+        text: "hello world-FINE.",
+        likes: 
     },
     {
         text: "It's about who stays, not who promised.",
