@@ -2,7 +2,6 @@
 const statusData = [
     {
         text: "Choose people who choose you.",
-        likes: "12K"
     },
     {
         text: "Manrattan.",
