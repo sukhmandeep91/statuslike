@@ -5,6 +5,10 @@ const statusData = [
         likes: "12K"
     },
     {
+        text: "Manrattan.",
+        likes: "12K"
+    },
+    {
         text: "It's about who stays, not who promised.",
         likes: "1K"
     },
