@@ -42,14 +42,6 @@ const statusData = [
     }
 ];
 
-```let likeCount = 0;
-
-function likePost() {
-  likeCount++;
-  document.getElementById("like-count").innerHTML = likeCount;
-  document.getElementById("like-button").innerHTML = "Liked!";
-  document.getElementById("like-button").disabled = true;
-}```
 // DOM Elements
 const statusGrid = document.querySelector('.status-grid');
 const loadMoreBtn = document.getElementById('loadMore');
