@@ -50,6 +50,73 @@ const statusData = [
 const statusGrid = document.querySelector('.status-grid');
 const loadMoreBtn = document.getElementById('loadMore');
 
+// Initialize Firebase (replace with your config)
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  databaseURL: "YOUR_DATABASE_URL",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Like button functionality
+document.querySelectorAll('.like-btn').forEach(button => {
+  const statusId = button.dataset.statusId;
+  const likeCountEl = button.querySelector('.like-count');
+  
+  // Check if current user has liked this status
+  if (firebase.auth().currentUser) {
+    db.ref(`likes/${statusId}/${firebase.auth().currentUser.uid}`).once('value')
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          button.classList.add('liked');
+          button.innerHTML = '<i class="fas fa-heart"></i> ' + likeCountEl.outerHTML;
+        }
+      });
+  }
+  
+  // Update like count in real-time
+  db.ref(`likeCounts/${statusId}`).on('value', snapshot => {
+    const count = snapshot.val() || 0;
+    likeCountEl.textContent = count;
+  });
+
+  // Handle like button click
+  button.addEventListener('click', () => {
+    const user = firebase.auth().currentUser;
+    if (!user) {
+      alert('Please login to like statuses');
+      return;
+    }
+    
+    const statusRef = db.ref(`likes/${statusId}/${user.uid}`);
+    const countRef = db.ref(`likeCounts/${statusId}`);
+    
+    if (button.classList.contains('liked')) {
+      // Unlike
+      statusRef.remove()
+        .then(() => {
+          countRef.transaction(current => (current || 1) - 1);
+          button.classList.remove('liked');
+          button.innerHTML = '<i class="far fa-heart"></i> ' + likeCountEl.outerHTML;
+        });
+    } else {
+      // Like
+      statusRef.set(true)
+        .then(() => {
+          countRef.transaction(current => (current || 0) + 1);
+          button.classList.add('liked');
+          button.innerHTML = '<i class="fas fa-heart"></i> ' + likeCountEl.outerHTML;
+        });
+    }
+  });
+});
+
 // Display statuses
 function displayStatuses(statuses) {
     statuses.forEach(status => {
