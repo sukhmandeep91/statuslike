@@ -2,7 +2,7 @@
 const statusData = [
     {
         text: "hello world-FINE.",
-     
+     likes: "1K"
     },
     {
         text: "It's about who stays, not who promised.",
